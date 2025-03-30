@@ -24,10 +24,14 @@ class DialogImages extends JDialog implements ActionListener {
     // Constructeur
     public DialogImages(NombresImages parent) {
         super(parent, true);           // Création d'un dialogue modal
-        setTitle("Choix images");
+        setTitle(LanguageManager.getString("dialog.choiceImages.title"));
         setSize(1000, 600);
         this.parent = parent;
         setLocationRelativeTo(parent);
+
+        // Appliquer l'orientation des composants selon la langue
+        applyComponentOrientation(LanguageManager.getComponentOrientation());
+
         initGUI();
     }
 
@@ -40,15 +44,15 @@ class DialogImages extends JDialog implements ActionListener {
         updatePanIconesLayout();
 
         // Création et configuration des boutons de contrôle
-        btnAjouter = new JButton("Ajouter");
+        btnAjouter = new JButton(LanguageManager.getString("btn.add"));
         btnAjouter.setPreferredSize(dimBoutons);
         btnAjouter.addActionListener(this);
 
-        btnSupprimer = new JButton("Supprimer");
+        btnSupprimer = new JButton(LanguageManager.getString("btn.delete"));
         btnSupprimer.setPreferredSize(dimBoutons);
         btnSupprimer.addActionListener(this);
 
-        btnReset = new JButton("Restaurer");
+        btnReset = new JButton(LanguageManager.getString("btn.restore"));
         btnReset.setPreferredSize(dimBoutons);
         btnReset.addActionListener(this);
 
@@ -198,12 +202,15 @@ class DialogImages extends JDialog implements ActionListener {
 
                 if (fichierExiste) {
                     // Options personnalisées pour les boutons
-                    Object[] options = {"Remplacer", "Ignorer"};
+                    Object[] options = {
+                            LanguageManager.getString("option.replace"),
+                            LanguageManager.getString("option.ignore")
+                    };
 
                     // Demander à l'utilisateur s'il veut remplacer le fichier
                     int choix = JOptionPane.showOptionDialog(
                             this,
-                            "Un fichier nommé '" + nomSansExtension + "' existe déjà. Que souhaitez-vous faire ?",
+                            LanguageManager.getString("warning.fileExists", nomSansExtension),
                             "Fichier existant",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE,
@@ -234,11 +241,11 @@ class DialogImages extends JDialog implements ActionListener {
                     Files.copy(source, cible, StandardCopyOption.REPLACE_EXISTING);
                     parent.arrayImages.add(cible.toAbsolutePath().toString());
                 } catch (IOException e) {
-                    System.err.println("Erreur lors de la copie de " + fichier.getName());
+                    System.err.println(LanguageManager.getString("error.copyFile", fichier.getName()));
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(
                             this,
-                            "Erreur lors de la copie du fichier '" + fichier.getName() + "'",
+                            LanguageManager.getString("error.copyFile", fichier.getName()),
                             "Erreur",
                             JOptionPane.ERROR_MESSAGE
                     );
@@ -253,6 +260,7 @@ class DialogImages extends JDialog implements ActionListener {
         int lastDot = nomFichier.lastIndexOf('.');
         return lastDot > 0 ? nomFichier.substring(0, lastDot) : nomFichier;
     }
+
     // Suppression d'images
     void ecoutBtnSupprimer() {
         DialogSupprImages dialogSupprImages = new DialogSupprImages(parent);
@@ -262,9 +270,12 @@ class DialogImages extends JDialog implements ActionListener {
 
     // Restauration des images par défaut
     void ecoutBtnReset() {
-        Object[] options = {"Oui", "Non"};
+        Object[] options = {
+                LanguageManager.getString("option.replace"),
+                LanguageManager.getString("option.ignore")
+        };
         int choix = JOptionPane.showOptionDialog(this,
-                "Attention ! Les images que vous avez ajoutées seront perdues.\nVoulez-vous vraiment restaurer les images par défaut ?",
+                LanguageManager.getString("warning.restoreImages"),
                 "Avertissement",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE,
@@ -273,33 +284,25 @@ class DialogImages extends JDialog implements ActionListener {
                 options[1]); // Option "Non" par défaut
 
         if (choix == JOptionPane.YES_OPTION) {
-            try {
-                // Supprimer physiquement les fichiers actuels
-                for (String cheminImage : parent.arrayImages) {
-                    File fichierImage = new File(cheminImage);
-                    if (fichierImage.exists()) {
-                        try {
-                            boolean supprime = fichierImage.delete();
-                            if (!supprime) {
-                                System.err.println("Impossible de supprimer le fichier: " + cheminImage);
-                            }
-                        } catch (SecurityException e) {
-                            System.err.println("Erreur lors de la suppression du fichier: " + e.getMessage());
+            // Supprimer physiquement les fichiers actuels
+            for (String cheminImage : parent.arrayImages) {
+                File fichierImage = new File(cheminImage);
+                if (fichierImage.exists()) {
+                    try {
+                        boolean supprime = fichierImage.delete();
+                        if (!supprime) {
+                            System.err.println(LanguageManager.getString("error.deleteFile", cheminImage));
                         }
+                    } catch (SecurityException e) {
+                        System.err.println("Erreur lors de la suppression du fichier: " + e.getMessage());
                     }
                 }
-
-                // Vider la liste et restaurer les images par défaut
-                parent.arrayImages.clear();
-                parent.arrayImages.addAll(NombresImages.copierDefaultImages());
-                initPanIcons();
-
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Erreur lors de la restauration des images par défaut : " + e.getMessage(),
-                        "Erreur",
-                        JOptionPane.ERROR_MESSAGE);
             }
+
+            // Vider la liste et restaurer les images par défaut
+            parent.arrayImages.clear();
+            parent.arrayImages.addAll(NombresImages.copierDefaultImages());
+            initPanIcons();
         }
     }
 }

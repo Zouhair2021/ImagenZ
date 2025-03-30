@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepreZ - تمثيل بصري للأعداد</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+        
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            left: 30px; /* Changed from right to left for RTL */
+            z-index: 100;
+        }
+        
+        .language-btn {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-right: 10px; /* Changed from left to right for RTL */
+        }
+        
+        .language-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 0.5rem;
+        }
+        
+        .cta-button:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+        
+        section {
+            margin-bottom: 4rem;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--secondary-color);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .screenshots {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .screenshot {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+        
+        .screenshot:hover img {
+            transform: scale(1.02);
+        }
+        
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .color-block {
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .download-section {
+            background-color: var(--light-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .download-cta {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            color: var(--light-text);
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="language-selector">
+            <a href="index_en.html" class="language-btn">English</a>
+            <a href="index_fr.html" class="language-btn">Français</a>
+        </div>
+        <div class="header-content">
+            <h1>RepreZ</h1>
+            <p class="tagline">تمثيل تعليمي للأرقام باستخدام كتل القيمة المكانية</p>
+            <a href="#download" class="cta-button">تحميل</a>
+            <a href="#features" class="cta-button">اكتشف</a>
+        </div>
+    </header>
+    
+    <main>
+        <section id="intro">
+            <h2>تمثيل بصري للأرقام</h2>
+            <p>RepreZ هو تطبيق تعليمي يسمح بتصور الأرقام من 0 إلى 9999 باستخدام كتل تمثل الآلاف والمئات والعشرات والوحدات. هذه الطريقة للتمثيل البصري فعالة بشكل خاص لتعلم النظام العشري وترقيم القيمة المكانية.</p>
+            <p>تم تطويره بلغة جافا، يوفر هذا التطبيق واجهة تفاعلية تسمح للمعلمين والطلاب بإنشاء وتمثيل والتقاط تمثيلات بصرية للأرقام.</p>
+        </section>
+        
+        <section id="features">
+            <h2>المميزات</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🔢</div>
+                    <h3>تمثيل بالكتل</h3>
+                    <p>تصور الأرقام ككتل ملونة تمثل الآلاف والمئات والعشرات والوحدات لفهم أفضل للقيمة المكانية.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎲</div>
+                    <h3>توليد عشوائي</h3>
+                    <p>توليد أرقام عشوائية ضمن نطاق محدد لإنشاء تمارين متنوعة بسرعة.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>لقطة شاشة متكاملة</h3>
+                    <p>التقاط التمثيلات تلقائيًا لإنشاء أوراق التمارين أو المواد التعليمية.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>تخصيص الألوان</h3>
+                    <p>اختر من بين 9 مخططات ألوان مختلفة لتكييف التمثيل البصري مع احتياجاتك التعليمية.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>وضع ملء الشاشة</h3>
+                    <p>استخدم وضع ملء الشاشة لعرض أفضل أثناء العروض التوضيحية في الفصل الدراسي.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>توليد تلقائي</h3>
+                    <p>إنشاء مجموعة من التمثيلات بسرعة باستخدام وظيفة الالتقاط التلقائي.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="screenshots">
+            <h2>لقطات الشاشة</h2>
+            <div class="screenshots">
+                <div class="screenshot">
+                    <img src="capture1.png" alt="RepreZ - الواجهة الرئيسية مع تمثيل الأرقام">
+                </div>
+                <div class="screenshot">
+                    <img src="capture2.png" alt="RepreZ - مثال آخر على التمثيل الرقمي">
+                </div>
+                <div class="screenshot">
+                    <img src="capture3.png" alt="RepreZ - الميزات المتقدمة للتطبيق">
+                </div>
+            </div>
+        </section>
+        
+        <section id="usage">
+            <h2>كيفية استخدام RepreZ</h2>
+            
+            <h3>التمثيل البسيط</h3>
+            <p>1. أدخل رقمًا بين 0 و 9999 في حقل النص</p>
+            <p>2. انقر على "تمثيل" لتصور الرقم</p>
+            <p>3. استخدم "التقاط" لحفظ الصورة في مجلد اللقطات</p>
+            
+            <h3>التوليد العشوائي</h3>
+            <p>1. حدد القيم الدنيا والقصوى للنطاق</p>
+            <p>2. انقر على "توليد" للحصول على رقم عشوائي ضمن هذا النطاق</p>
+            <p>3. يتم تمثيل الرقم بصريًا بشكل تلقائي</p>
+            
+            <h3>الالتقاط التلقائي</h3>
+            <p>1. حدد "التقاط تلقائي" في أعلى الواجهة</p>
+            <p>2. أشر إلى عدد اللقطات المطلوبة</p>
+            <p>3. حدد النطاق الأدنى/الأقصى</p>
+            <p>4. انقر على "توليد" لبدء التوليد والالتقاط التلقائي</p>
+        </section>
+        
+        <section id="download" class="download-section">
+            <h2 class="download-cta">تحميل RepreZ 2.0</h2>
+            <p>تطبيق Windows جاهز للاستخدام</p>
+            <p>الإصدارالحالي 2.1</p>
+            <a href="https://sourceforge.net/projects/reprez/files/latest/download" class="cta-button">تحميل RepreZ (Windows)</a>
+            <p style="margin-top: 1.5rem;">RepreZ هو مشروع مفتوح المصدر تحت رخصة MIT</p>
+            <a href="https://github.com/Zouhair2021/RepreZ" class="cta-button" style="background-color: #333;">عرض على GitHub</a>
+        </section>
+        
+        <section id="contact">
+            <h2>اتصل بنا</h2>
+            <p>هل لديك أسئلة أو اقتراحات أو تحتاج إلى مساعدة؟ لا تتردد في الاتصال بنا من خلال القنوات التالية:</p>
+            
+            <div class="features" style="margin-top: 1.5rem;">
+                <div class="feature-card">
+                    <div class="feature-icon" style="color: #25D366;">📱</div>
+                    <h3>واتساب</h3>
+                    <p>تواصل معنا مباشرة عبر واتساب للحصول على رد سريع على أسئلتك.</p>
+                    <a href="https://wa.me/212659686664" class="cta-button" style="background-color: #25D366;">التواصل عبر واتساب</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon" style="color: #1877F2;">👥</div>
+                    <h3>فيسبوك</h3>
+                    <p>تابعنا على فيسبوك للحصول على آخر الأخبار والبرامج التعليمية والتحديثات.</p>
+                    <a href="https://web.facebook.com/profile.php?id=61558486916972" class="cta-button" style="background-color: #1877F2;">متابعة على فيسبوك</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>RepreZ 2.0 - تطبيق تعليمي للتمثيل البصري للأرقام</p>
+            <p>مشروع مفتوح المصدر تحت رخصة MIT</p>
+        </div>
+    </footer>
+</body>
+</html>

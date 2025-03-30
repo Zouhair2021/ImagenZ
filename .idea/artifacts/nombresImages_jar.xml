@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="nombresImages:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/nombresImages_jar</output-path>
+    <root id="archive" name="nombresImages.jar">
+      <element id="module-output" name="nombresImages" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../utilitaires/out/artifacts/utilitaires_jar/utilitaires.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

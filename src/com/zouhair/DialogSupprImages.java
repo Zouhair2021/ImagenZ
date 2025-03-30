@@ -15,17 +15,20 @@ public class DialogSupprImages extends JDialog {
     JScrollPane scrollPane;
 
     public DialogSupprImages(NombresImages parent) {
-        setTitle("Supprimer images");
+        setTitle(LanguageManager.getString("dialog.deleteImages"));
         setSize(600, 400);
         this.parent = parent;
         setModal(true);
         setLocationRelativeTo(parent);
         arrayImages = NombresImages.arrayImages;
 
+        // Appliquer l'orientation des composants selon la langue
+        applyComponentOrientation(LanguageManager.getComponentOrientation());
+
         // Création du layout principal
         setLayout(new BorderLayout());
 
-        btnSupprimer = new JButton("Supprimer la sélection");
+        btnSupprimer = new JButton(LanguageManager.getString("btn.deleteSelection"));
         add(btnSupprimer, BorderLayout.SOUTH);
         btnSupprimer.addActionListener(ee -> ecoutBtnSupprimer());
 
@@ -37,7 +40,6 @@ public class DialogSupprImages extends JDialog {
         add(scrollPane, BorderLayout.CENTER);
 
         initGUI();
-
     }
 
     void initGUI() {
@@ -87,7 +89,7 @@ public class DialogSupprImages extends JDialog {
                     try {
                         boolean supprime = fichierImage.delete();
                         if (!supprime) {
-                            System.err.println("Impossible de supprimer le fichier: " + cheminImage);
+                            System.err.println(LanguageManager.getString("error.deleteFile", cheminImage));
                         }
                     } catch (SecurityException e) {
                         System.err.println("Erreur lors de la suppression du fichier: " + e.getMessage());
