@@ -1,0 +1,27 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <HBox spacing="8" alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10"/>
+            </BorderPane.margin>
+            <Label text="Catégorie :"/>
+            <ComboBox fx:id="cmbCategories" prefWidth="200"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER">
+            <content>
+                <GridPane fx:id="gridImages" hgap="3" vgap="3">
+                    <padding>
+                        <Insets top="5" right="5" bottom="5" left="5"/>
+                    </padding>
+                </GridPane>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

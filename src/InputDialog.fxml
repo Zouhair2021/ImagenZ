@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            prefWidth="420">
+
+    <content>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <!-- Ligne Nombre de captures -->
+            <GridPane hgap="10" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" prefWidth="140"/>
+                    <ColumnConstraints halignment="LEFT" prefWidth="200"/>
+                </columnConstraints>
+
+                <Label text="Nombre de captures:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCapturesNumber" prefWidth="80"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Mode de génération:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="modeComboBox" prefWidth="220"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- Panneau options (équivalent CardLayout) -->
+            <TitledPane text="Options" collapsible="false">
+                <content>
+                    <StackPane fx:id="stackModeOptions">
+
+                        <!-- Mode simple -->
+                        <VBox fx:id="paneSimple" spacing="8">
+
+                            <HBox spacing="10">
+                                <Label text="Min:"/>
+                                <TextField fx:id="txtSimpleMinNumber" prefWidth="80"/>
+                            </HBox>
+
+                            <HBox spacing="10">
+                                <Label text="Max:"/>
+                                <TextField fx:id="txtSimpleMaxNumber" prefWidth="80"/>
+                            </HBox>
+
+                            <HBox spacing="15">
+                                <CheckBox fx:id="chkSimpleRandomNumbers" text="Nombres aléatoires"/>
+                                <CheckBox fx:id="chkSimpleRandomImages" text="Images aléatoires"/>
+                            </HBox>
+
+                        </VBox>
+
+
+
+
+                        <!-- Mode somme max -->
+                        <HBox fx:id="paneMaxSum" spacing="10">
+                            <Label text="Somme maximale:"/>
+                            <TextField fx:id="txtMaxSum" prefWidth="80"/>
+                            <CheckBox fx:id="chkSumRandomNumbers" text="Nombres aléatoires"/>
+                            <CheckBox fx:id="chkSumRandomImages" text="Images aléatoires"/>
+                        </HBox>
+
+                        <!-- Mode nombre max -->
+                        <HBox fx:id="paneMaxNumber" spacing="10">
+                            <Label text="Nombre maximal:"/>
+                            <TextField fx:id="txtMaxNumber" prefWidth="80"/>
+                            <CheckBox fx:id="chkNumberRandomNumbers" text="Nombres aléatoires"/>
+                            <CheckBox fx:id="chkNumberRandomImages" text="Images aléatoires"/>
+                        </HBox>
+
+                    </StackPane>
+                </content>
+            </TitledPane>
+
+            <!-- Label éventuel d'erreur (optionnel) -->
+            <Label fx:id="lblError" textFill="red" wrapText="true" />
+
+        </VBox>
+    </content>
+
+    <buttonTypes>
+        <ButtonType fx:id="btnTypeOk" text="Confirmer" buttonData="OK_DONE"/>
+        <ButtonType text="Annuler" buttonData="CANCEL_CLOSE"/>
+    </buttonTypes>
+
+</DialogPane>

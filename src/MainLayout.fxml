@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="MainController">
+    <fx:define>
+        <ToggleGroup fx:id="fileNameGroup"/>
+    </fx:define>
+    <top>
+        <MenuBar>
+            <menus>
+
+                <Menu text="Options">
+                    <items>
+                        <MenuItem text="Gérer les images..." onAction="#onManageImages"/>
+                        <Menu text="Noms des fichiers images">
+                            <items>
+                                <RadioMenuItem text="Contenu" toggleGroup="$fileNameGroup"
+                                               fx:id="rmiContent" onAction="#onFileName"/>
+                                <RadioMenuItem text="Nombres croissants" toggleGroup="$fileNameGroup"
+                                               fx:id="rmiAscending" onAction="#onFileName"/>
+                                <RadioMenuItem text="Nombres aléatoires" toggleGroup="$fileNameGroup"
+                                               fx:id="rmiRandom" onAction="#onFileName"/>
+                            </items>
+                        </Menu>
+                    </items>
+                </Menu>
+
+                <!-- 🔹 Nouveau menu Aide / À propos -->
+                <Menu text="Aide">
+                    <items>
+                        <MenuItem text="À propos..." onAction="#onAbout"/>
+                    </items>
+                </Menu>
+
+            </menus>
+        </MenuBar>
+    </top>
+
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-background-color: lightgray;" />
+    </center>
+
+    <bottom>
+        <FlowPane alignment="center" hgap="10" vgap="10" style="-fx-background-color: lightblue;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <CheckBox fx:id="chkMultiple" text="Multiple" onAction="#onCheckMultiple"/>
+            <Label text="Nombre 1"/>
+            <Spinner fx:id="spinNumber1" prefWidth="50" editable="true"/>
+            <Label text="Nombre 2"/>
+            <Spinner fx:id="spinNumber2" prefWidth="50" editable="true"/>
+            <Button fx:id="btnChooseImage" text="Choisir image" onAction="#onChooseImage"/>
+            <Button fx:id="btnCapture" text="Capturer" onAction="#onCapture"/>
+            <Button fx:id="btnProgramme" text="Programmer" onAction="#onProgramme"/>
+            <Button fx:id="btnOpenFolder" text="Ouvrir dossier capture" onAction="#onOpenFolder"/>
+        </FlowPane>
+    </bottom>
+</BorderPane>

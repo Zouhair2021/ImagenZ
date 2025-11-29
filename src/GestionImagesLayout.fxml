@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+
+    <top>
+        <HBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <!-- ComboBox des catégories -->
+            <ComboBox fx:id="cmbCategories" prefWidth="200"/>
+            <!-- Bouton : ajouter des images à la catégorie courante -->
+            <Button fx:id="btnAjouter" text="Ajouter des images"/>
+            <!-- Bouton : nouvelle catégorie -->
+            <Button fx:id="btnAjouterCategorie" text="Nouvelle catégorie"/>
+            <Button fx:id="btnSupprimerCategorie" text="Supprimer catégorie"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED">
+            <content>
+                <GridPane fx:id="gridImages"
+                          hgap="5"
+                          vgap="5">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                </GridPane>
+            </content>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

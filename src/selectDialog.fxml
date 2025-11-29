@@ -1,0 +1,67 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="SelectDialogController"
+      spacing="8" maxHeight="Infinity" maxWidth="Infinity">
+
+    <!-- ScrollPane TRES GRAND pour selectPan -->
+    <ScrollPane VBox.vgrow="ALWAYS"
+                fitToWidth="true"
+                vbarPolicy="AS_NEEDED"
+                hbarPolicy="NEVER">
+
+        <content>
+            <GridPane fx:id="selectPan"
+                      hgap="10" vgap="10"
+                      style="-fx-background-color: white;">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                </columnConstraints>
+            </GridPane>
+        </content>
+    </ScrollPane>
+
+    <!-- Zone catégorie (toujours visible) -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <padding>
+            <Insets top="5" right="10" bottom="5" left="10"/>
+        </padding>
+
+        <Label text="Catégorie :"/>
+        <ComboBox fx:id="cmbCategories" prefWidth="200"/>
+    </HBox>
+
+    <!-- Grille des miniatures (toujours visible) -->
+    <ScrollPane fitToWidth="true" fitToHeight="true"
+                prefViewportHeight="250"
+                vbarPolicy="AS_NEEDED" hbarPolicy="NEVER"
+                VBox.vgrow="ALWAYS">
+
+        <content>
+            <GridPane fx:id="gridImages"
+                      hgap="3" vgap="3">
+                <padding>
+                    <Insets top="5" right="10" bottom="5" left="10"/>
+                </padding>
+            </GridPane>
+        </content>
+    </ScrollPane>
+
+    <Separator/>
+
+    <!-- Boutons toujours visibles -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <padding>
+            <Insets top="5" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <Button text="Valider" onAction="#onValidate"
+                defaultButton="true" style="-fx-font-weight: bold;"/>
+        <Button text="Fermer" onAction="#onClose"/>
+    </HBox>
+
+</VBox>
