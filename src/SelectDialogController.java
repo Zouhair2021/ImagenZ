@@ -138,13 +138,15 @@ public class SelectDialogController {
     // === Génération avec somme maximale ===
     private void withMaxSumGenerate(int maxSum) {
 
+        final int MAX_VALUE = 15;
+
         record IntPair(int first, int second) {}
 
         ArrayList<IntPair> pairs = new ArrayList<>();
 
-        // 1) Générer toutes les paires uniques possibles
-        for (int i = 1; i < maxSum; i++) {
-            for (int j = 1; j <= maxSum - i; j++) {
+        // 1) Générer toutes les paires possibles
+        for (int i = 1; i <= Math.min(MAX_VALUE, maxSum - 1); i++) {
+            for (int j = 1; j <= Math.min(MAX_VALUE, maxSum - i); j++) {
                 pairs.add(new IntPair(i, j));
             }
         }
@@ -153,21 +155,27 @@ public class SelectDialogController {
 
         int total = numberOfCaptures;
 
-        // 2) Remplir avec des paires uniques tant que possible
+        // 2) Paires uniques tant que possible
         int uniqueCount = Math.min(total, pairs.size());
         for (int i = 0; i < uniqueCount; i++) {
             listNumber1[i] = pairs.get(i).first();
             listNumber2[i] = pairs.get(i).second();
         }
 
-        // 3) Compléter le reste avec des paires aléatoires
+        // 3) Compléter avec des paires aléatoires (toujours ≤ 15)
         for (int i = uniqueCount; i < total; i++) {
-            int a = rnd.nextInt(maxSum - 1) + 1; // 1..maxSum-1
-            int b = rnd.nextInt(maxSum - a) + 1; // 1..maxSum-a
+
+            int maxA = Math.min(MAX_VALUE, maxSum - 1);
+            int a = rnd.nextInt(maxA) + 1;
+
+            int maxB = Math.min(MAX_VALUE, maxSum - a);
+            int b = rnd.nextInt(maxB) + 1;
+
             listNumber1[i] = a;
             listNumber2[i] = b;
         }
     }
+
 
     // === Génération avec nombre maximal ===
     private void withMaxNumberGenerate(int maxNumber) {
